@@ -66,7 +66,7 @@ public struct MessageField: View {
     @State private var mediaData: Data?
     
     // Media
-    @State private var selectedItem: PhotosPickerItem? = nil
+//    @State private var selectedItem: PhotosPickerItem? = nil
     
     @Binding var isMenuItemPresented: Bool
     
@@ -112,27 +112,27 @@ public struct MessageField: View {
                         .frame(width: 36, height: 36)
                     }
                     
-                    // Photo Library Button
-                    if options.contains(.photoLibrary) {
-                        PhotosPicker(
-                            selection: $selectedItem,
-                            matching: .images,
-                            photoLibrary: .shared()
-                        ) {
-                            Image.photoLibrary.medium
-                        }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
-                        .frame(width: 36, height: 36)
-                        .onChange(of: selectedItem) { newItem in
-                            Task {
-                                // Retrive selected asset in the form of Data
-                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                    self.onSelectPhoto(data: data)
-                                }
-                            }
-                        }
-                    }
+//                    // Photo Library Button
+//                    if options.contains(.photoLibrary) {
+//                        PhotosPicker(
+//                            selection: $selectedItem,
+//                            matching: .images,
+//                            photoLibrary: .shared()
+//                        ) {
+//                            Image.photoLibrary.medium
+//                        }
+//                        .tint(appearance.tint)
+//                        .disabled(isMenuItemPresented)
+//                        .frame(width: 36, height: 36)
+//                        .onChange(of: selectedItem) { newItem in
+//                            Task {
+//                                // Retrive selected asset in the form of Data
+//                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+//                                    self.onSelectPhoto(data: data)
+//                                }
+//                            }
+//                        }
+//                    }
                     
                     // Mic Button
                     if options.contains(.mic) {
@@ -192,8 +192,8 @@ public struct MessageField: View {
             if let giphyKey = configuration.giphyKey {
                 GiphyPicker(giphyKey: giphyKey)
                     .ignoresSafeArea()
-                    .presentationDetents([.fraction(0.9)])
-                    .presentationDragIndicator(.hidden)
+//                    .presentationDetents([.fraction(0.9)])
+//                    .presentationDragIndicator(.hidden)
             } else {
                 Text("No Giphy Key")
             }
