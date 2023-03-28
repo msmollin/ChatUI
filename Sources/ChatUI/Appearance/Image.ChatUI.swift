@@ -38,8 +38,8 @@ extension Image {
     /// paperplane.fill
     public static var send: Image = Image(systemName: "paperplane.fill")
     
-    /// chevron.right
-    public static var buttonHidden: Image = Image(systemName: "chevron.right")
+    /// keyboard.chevron.compact.down
+    public static var buttonHidden: Image = Image(systemName: "keyboard.chevron.compact.down")
     
     /// chevron.down
     public static var directionDown: Image = Image(systemName: "chevron.down")
