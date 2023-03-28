@@ -1,17 +1,17 @@
 //
 //  MessageField.swift
-//  
+//
 //
 //  Created by Jaesung Lee on 2023/02/08.
 //
 
 import Combine
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 /**
  The view for sending messages.
- 
+
  When creating a `MessageField`, you can provide an action for how to handle a new `MessageStyle` information in the `onSend` parameter. `MessageStyle` can contain different types of messages, such as text, media (photo, video, document, contact), and voice.
 
  ```swift
@@ -19,9 +19,9 @@ import PhotosUI
      viewModel.sendMessage($0)
  }
  ```
- 
+
  To handle menu items, assign state property to `isMenuItemPresented` parameter.
- 
+
  ```swift
  MessageField(isMenuItemPresented: $isMenuItemPresented) { ... }
 
@@ -29,7 +29,7 @@ import PhotosUI
      MyMenuItemList()
  }
  ```
- 
+
  To publish a new message, you can create a new `MessageStyle` object and send it using `send(_:)`.
 
  ```swift
@@ -44,7 +44,7 @@ import PhotosUI
          receiveValue: { _ in }
      )
  ```
- 
+
  You can subscribe to `sendMessagePublisher` to handle new messages.
 
  ```swift
@@ -57,37 +57,48 @@ public struct MessageField: View {
     @EnvironmentObject private var configuration: ChatConfiguration
 
     @Environment(\.appearance) var appearance
-    
-    
+
     @FocusState private var isTextFieldFocused: Bool
     @State private var text: String = ""
     @State private var textFieldHeight: CGFloat = 20
     @State private var giphyKey: String?
     @State private var mediaData: Data?
-    
+
     // Media
 //    @State private var selectedItem: PhotosPickerItem? = nil
-    
+
     @Binding var isMenuItemPresented: Bool
-    
+
     @State private var isGIFPickerPresented: Bool = false
     @State private var isCameraFieldPresented: Bool = false
     @State private var isVoiceFieldPresented: Bool = false
-    
+
     let options: [MessageOption]
     let showsSendButtonAlways: Bool
     let characterLimit: Int?
-    let onSend: (_ messageStyle: MessageStyle) -> ()
-    private var alwaysShowHidden : Bool
-    
+    let onSend: (_ messageStyle: MessageStyle) -> Void
+    private var alwaysShowHidden: Bool
+
     private var leftSideOptions: [MessageOption] {
         options.filter { $0 != .giphy }
     }
-    
+
+    private func showHiddenButton() -> Bool {
+        //  alwaysShowHidden, isTextFieldFocused || isTextFieldFocused, leftSideOptions.count > 1
+        if isTextFieldFocused {
+            if alwaysShowHidden {
+                return true
+            } else {
+                return leftSideOptions.count > 1
+            }
+        }
+        return false
+    }
+
     public var body: some View {
         ZStack(alignment: .bottom) {
             HStack(alignment: .bottom) {
-                if alwaysShowHidden, isTextFieldFocused || isTextFieldFocused, leftSideOptions.count > 1 {
+                if showHiddenButton() {
                     Button(action: onTapHiddenButton) {
                         Image.buttonHidden.medium
                             .tint(appearance.tint)
@@ -102,7 +113,7 @@ public struct MessageField: View {
                         .tint(appearance.tint)
                         .frame(width: 36, height: 36)
                     }
-                    
+
                     // Camera Button
                     if options.contains(.camera) {
                         Button(action: onTapCamera) {
@@ -112,8 +123,7 @@ public struct MessageField: View {
                         .disabled(isMenuItemPresented)
                         .frame(width: 36, height: 36)
                     }
-                    
-//                    // Photo Library Button
+                    // Photo Library Button
 //                    if options.contains(.photoLibrary) {
 //                        PhotosPicker(
 //                            selection: $selectedItem,
@@ -134,7 +144,6 @@ public struct MessageField: View {
 //                            }
 //                        }
 //                    }
-                    
                     // Mic Button
                     if options.contains(.mic) {
                         Button(action: onTapMic) {
@@ -145,7 +154,7 @@ public struct MessageField: View {
                         .frame(width: 36, height: 36)
                     }
                 }
-                
+
                 // TextField
                 HStack(alignment: .bottom) {
                     MessageTextField(text: $text, height: $textFieldHeight, characterLimit: characterLimit)
@@ -153,7 +162,7 @@ public struct MessageField: View {
                         .padding(.leading, 9)
                         .padding(.trailing, 4)
                         .focused($isTextFieldFocused)
-                    
+
                     // Giphy Button
                     if options.contains(.giphy) {
                         Button(action: onTapGiphy) {
@@ -168,7 +177,7 @@ public struct MessageField: View {
                     appearance.secondaryBackground
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                 }
-                
+
                 // Send Button
                 if showsSendButtonAlways || !text.isEmpty {
                     Button(action: onTapSend) {
@@ -180,11 +189,11 @@ public struct MessageField: View {
                 }
             }
             .padding(16)
-            
+
             if isVoiceFieldPresented {
                 VoiceField(isPresented: $isVoiceFieldPresented)
             }
-            
+
             if isCameraFieldPresented {
                 CameraField(isPresented: $isCameraFieldPresented)
             }
@@ -203,27 +212,26 @@ public struct MessageField: View {
             onSend(messageStyle)
         }
     }
-    
-    
+
     public init(
         options: [MessageOption] = MessageOption.all,
         showsSendButtonAlways: Bool = false,
         characterLimit: Int? = nil,
         isMenuItemPresented: Binding<Bool> = .constant(false),
-        onSend: @escaping (_ messageStyle: MessageStyle) -> ()
+        onSend: @escaping (_ messageStyle: MessageStyle) -> Void
     ) {
         self.options = options
         self.showsSendButtonAlways = showsSendButtonAlways
         self.characterLimit = characterLimit
-        self._isMenuItemPresented = isMenuItemPresented
+        _isMenuItemPresented = isMenuItemPresented
         self.onSend = onSend
-        self.alwaysShowHidden = true
+        alwaysShowHidden = true
     }
-    
+
     func onTapHiddenButton() {
         isTextFieldFocused = false
     }
-    
+
     func onTapMore() {
         isMenuItemPresented.toggle()
     }
@@ -232,22 +240,22 @@ public struct MessageField: View {
         dismissMenuItems()
         isCameraFieldPresented = true
     }
-    
+
     func onSelectPhoto(data: Data) {
         onSend(.media(.photo(data)))
     }
-    
+
     func onTapMic() {
         dismissMenuItems()
         isVoiceFieldPresented = true
     }
-    
+
     /// Shows ``GiphyPicker``
     func onTapGiphy() {
         dismissMenuItems()
         isGIFPickerPresented = true
     }
-    
+
     func onTapSend() {
         guard !text.isEmpty else { return }
         onSend(.text(text))
