@@ -78,6 +78,7 @@ public struct MessageField: View {
     let showsSendButtonAlways: Bool
     let characterLimit: Int?
     let onSend: (_ messageStyle: MessageStyle) -> ()
+    private var alwaysShowHidden : Bool
     
     private var leftSideOptions: [MessageOption] {
         options.filter { $0 != .giphy }
@@ -86,7 +87,7 @@ public struct MessageField: View {
     public var body: some View {
         ZStack(alignment: .bottom) {
             HStack(alignment: .bottom) {
-                if isTextFieldFocused, leftSideOptions.count > 1 {
+                if alwaysShowHidden, isTextFieldFocused || isTextFieldFocused, leftSideOptions.count > 1 {
                     Button(action: onTapHiddenButton) {
                         Image.buttonHidden.medium
                             .tint(appearance.tint)
@@ -216,6 +217,7 @@ public struct MessageField: View {
         self.characterLimit = characterLimit
         self._isMenuItemPresented = isMenuItemPresented
         self.onSend = onSend
+        self.alwaysShowHidden = true
     }
     
     func onTapHiddenButton() {
