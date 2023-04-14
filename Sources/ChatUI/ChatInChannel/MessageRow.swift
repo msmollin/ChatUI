@@ -83,14 +83,15 @@ public struct MessageRow<M: MessageProtocol>: View {
                     // MARK: Message bubble
                     MessageView(style: message.style, isMyMessage: isMyMessage, lineLimit: lineLimit)
                         .zIndex(0)
-                        .onLongPressGesture {
-                            withAnimation(.easeInOut) {
-                                let _ = Empty<Void, Never>()
-                                    .sink { _ in
-                                        highlightMessagePublisher.send(message)
-                                    } receiveValue: { _ in }
-                            }
-                        }
+                    // TODO: Figure out why when this code is in place scrolling doesn't work.
+//                        .onLongPressGesture {
+//                            withAnimation(.easeInOut) {
+//                                let _ = Empty<Void, Never>()
+//                                    .sink { _ in
+//                                        highlightMessagePublisher.send(message)
+//                                    } receiveValue: { _ in }
+//                            }
+//                        }
                 }
                 
                 if !isMyMessage {
