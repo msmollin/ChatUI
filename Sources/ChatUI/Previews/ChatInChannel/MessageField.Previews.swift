@@ -32,9 +32,6 @@ struct MessageField_Previews: PreviewProvider {
             
             MenuItemPreview()
                 .previewDisplayName("Menu items")
-
-            LocationSelectorPreview()
-                .previewDisplayName("Location Selector")
             
 //            VoiceField(isPresented: .constant(true))
 //                .previewDisplayName("Voice Field")
@@ -69,10 +66,6 @@ struct MessageField_Previews: PreviewProvider {
                         readReceipt: .sending,
                         style: messageStyle
                     )
-                }
-                
-                if isMenuItemPresented {
-                    LocationSelector(isPresented: .constant(true))
                 }
             }
         }
@@ -135,17 +128,6 @@ struct MessageField_Previews: PreviewProvider {
             .background { appearance.secondaryBackground }
             .frame(height: 124)
             .edgesIgnoringSafeArea(.bottom)
-        }
-    }
-    
-    struct LocationSelectorPreview: View {
-        var body: some View {
-            VStack {
-                Spacer()
-                
-                LocationSelector(isPresented: .constant(true))
-            }
-            
         }
     }
     
