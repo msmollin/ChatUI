@@ -27,7 +27,8 @@ struct MessageView: View {
                 Text(key)
                     .messageStyle(isMyMessage ? .localBody(lineLimit) : .remoteBody(lineLimit))
             case .gif(let key):
-                GiphyStyleView(id: key)
+//                GiphyStyleView(id: key)
+              EmptyView()
             case .photo(let data):
                 PhotoStyleView(data: data)
             case .video(let data):

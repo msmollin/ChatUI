@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GiphyUISDK
+//import GiphyUISDK
 
 struct Message: MessageProtocol, Identifiable {
     var id: String
@@ -122,7 +122,7 @@ extension Message {
     
     static let giphyMessage: Message = {
         let id = "SU49goxca2V5XzxJPf"
-        Giphy.configure(apiKey: "wj5tEh9nAwNHVF3ZFavQ0zoaIyt8HZto")
+//        Giphy.configure(apiKey: "wj5tEh9nAwNHVF3ZFavQ0zoaIyt8HZto")
         return Message(
             id: UUID().uuidString,
             sender: User.user1,

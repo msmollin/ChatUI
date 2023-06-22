@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import GiphyUISDK
+//import GiphyUISDK
 
 /**
  An object representing the configuration settings for a chat. The settings include the *user ID* and an optional *Giphy API key*.
@@ -48,8 +48,8 @@ open class ChatConfiguration: ObservableObject {
         self.giphyKey = giphyKey
 
         // Giphy
-        if let giphyKey = giphyKey {
-            Giphy.configure(apiKey: giphyKey)
-        }
+//        if let giphyKey = giphyKey {
+//            Giphy.configure(apiKey: giphyKey)
+//        }
     }
 }

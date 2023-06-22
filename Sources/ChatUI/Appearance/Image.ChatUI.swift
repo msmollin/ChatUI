@@ -33,7 +33,7 @@ extension Image {
     public static var mic: Image = Image(systemName: "mic.fill")
     
     /// face.smiling.fill
-    public static var giphy: Image = Image(systemName: "face.smiling.fill")
+//    public static var giphy: Image = Image(systemName: "face.smiling.fill")
     
     /// paperplane.fill
     public static var send: Image = Image(systemName: "paperplane.fill")

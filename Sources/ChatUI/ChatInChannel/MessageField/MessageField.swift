@@ -61,7 +61,7 @@ public struct MessageField: View {
     @FocusState private var isTextFieldFocused: Bool
     @State private var text: String = ""
     @State private var textFieldHeight: CGFloat = 20
-    @State private var giphyKey: String?
+//    @State private var giphyKey: String?
     @State private var mediaData: Data?
 
     // Media
@@ -164,13 +164,13 @@ public struct MessageField: View {
                         .focused($isTextFieldFocused)
 
                     // Giphy Button
-                    if options.contains(.giphy) {
-                        Button(action: onTapGiphy) {
-                            Image.giphy.medium
-                        }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
-                    }
+//                    if options.contains(.giphy) {
+//                        Button(action: onTapGiphy) {
+//                            Image.giphy.medium
+//                        }
+//                        .tint(appearance.tint)
+//                        .disabled(isMenuItemPresented)
+//                    }
                 }
                 .padding(6)
                 .background {
@@ -200,8 +200,8 @@ public struct MessageField: View {
         }
         .sheet(isPresented: $isGIFPickerPresented) {
             if let giphyKey = configuration.giphyKey {
-                GiphyPicker(giphyKey: giphyKey)
-                    .ignoresSafeArea()
+//                GiphyPicker(giphyKey: giphyKey)
+//                    .ignoresSafeArea()
 //                    .presentationDetents([.fraction(0.9)])
 //                    .presentationDragIndicator(.hidden)
             } else {
