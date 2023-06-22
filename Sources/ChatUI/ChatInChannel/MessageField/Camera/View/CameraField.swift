@@ -21,7 +21,7 @@ public struct CameraField: View {
             if let capturedItem = capturedItem {
 //            if let imageData = dataModel.capturedPhotoData?.fileDataRepresentation() {
                 CapturedItemView(itemType: capturedItem)
-                    .frame(width: UIScreen.main.bounds.width)
+                    .frame(width: 600)
             } else {
                 appearance.secondary
                     .overlay {
@@ -35,8 +35,8 @@ public struct CameraField: View {
                         .foregroundColor(appearance.secondary)
                     }
                     .frame(
-                        width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.width
+                        width: 600,
+                        height: 600
                     )
             }
             
@@ -70,9 +70,10 @@ public struct CameraField: View {
         }
         .background { Color(.systemBackground) }
         .fullScreenCover(isPresented: $isCameraViewPresented) {
-            CameraView {
-                isPresented = false
-            }
+//            CameraView {
+//                isPresented = false
+//            }
+          EmptyView()
         }
         .onReceive(capturedItemPublisher) { capturedItem in
             self.capturedItem = capturedItem

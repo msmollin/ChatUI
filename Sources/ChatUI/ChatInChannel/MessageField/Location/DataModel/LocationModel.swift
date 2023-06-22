@@ -74,13 +74,13 @@ extension LocationModel: CLLocationManagerDelegate {
         print("🧭 [Location] error: \(error.localizedDescription)")
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            requestLocation()
-        } else {
-            locationTrackingStatus = .notAllowed
-        }
-    }
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        if status == .authorizedWhenInUse {
+//            requestLocation()
+//        } else {
+//            locationTrackingStatus = .notAllowed
+//        }
+//    }
 }
 
 extension LocationModel {
